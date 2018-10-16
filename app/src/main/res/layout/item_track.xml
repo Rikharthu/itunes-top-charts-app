@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/trackArt"
+        android:layout_width="82dp"
+        android:layout_height="82dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/sehnsucht" />
+
+    <TextView
+        android:id="@+id/trackTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/trackArtist"
+        app:layout_constraintStart_toEndOf="@+id/trackArt"
+        app:layout_constraintTop_toTopOf="@+id/trackArt"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Bück dich" />
+
+    <TextView
+        android:id="@+id/trackArtist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/trackArt"
+        app:layout_constraintStart_toStartOf="@+id/trackTitle"
+        app:layout_constraintTop_toBottomOf="@+id/trackTitle"
+        tools:text="Rammstein" />
+
+    <ImageView
+        android:id="@+id/favoriteIcon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:tint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_favorite_border" />
+
+    <TextView
+        android:id="@+id/trackPosition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#7A000000"
+        android:padding="2dp"
+        android:text="23"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@+id/trackArt"
+        app:layout_constraintTop_toTopOf="@+id/trackArt" />
+</androidx.constraintlayout.widget.ConstraintLayout>
