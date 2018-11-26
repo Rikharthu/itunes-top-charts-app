@@ -1,39 +1,20 @@
 package com.rikharthu.itunestopcharts.data.source
 
-import com.rikharthu.itunestopcharts.data.Track
+import com.rikharthu.itunestopcharts.core.exception.Failure
+import com.rikharthu.itunestopcharts.core.functional.Either
+import com.rikharthu.itunestopcharts.data.TrackEntity
 
 interface TracksDataSource {
 
-    suspend fun getHotTracks(count: Int = 10): Resource<List<Track>>
+    fun getHotTracks(count: Int): Either<Failure, List<TrackEntity>>
 
-    suspend fun getFavoriteTracks(): Resource<List<Track>>
+    fun getTrack(id: String): Either<Failure, TrackEntity>
 
-    suspend fun getTrack(trackId: String): Resource<Track>
+    fun saveTracks(vararg tracks: TrackEntity)
 
-    suspend fun saveTrack(track: Track)
+    fun getFavoriteTracks(): Either<Failure, List<TrackEntity>>
 
-    suspend fun saveTracks(tracks: List<Track>)
+    fun addTrackToFavorites(trackId: String)
 
-    suspend fun favoriteTrack(trackId: String)
-
-    suspend fun unFavoriteTrack(trackId: String)
-
-    suspend fun deleteTrack(trackId: String)
-
-
-//    suspend fun getTracks(count: Int = 10): Resource<List<Track>>
-//
-//    suspend fun getTrack(trackId: String): Resource<Track>
-//
-//    suspend fun saveTrack(track: Track)
-//
-//    suspend fun favoriteTrack(trackId: String)
-//
-//    suspend fun unFavoriteTrack(trackId: String)
-//
-//    suspend fun deleteTrack(trackId: String)
-//
-//    suspend fun deleteAllTracks()
-//
-//    suspend fun refreshTracks()
+    fun removeTrackFromFavorites(trackId: String)
 }

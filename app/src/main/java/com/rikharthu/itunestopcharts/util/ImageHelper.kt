@@ -10,8 +10,9 @@ import android.renderscript.Element
 import android.renderscript.RenderScript
 import android.renderscript.ScriptIntrinsicBlur
 import androidx.annotation.FloatRange
-import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 
 object ImageHelper {
 
@@ -42,12 +43,12 @@ object ImageHelper {
     }
 
     fun blurImageAsync(context: Context, image: Bitmap): Deferred<Bitmap> {
-        return async {
+        return GlobalScope.async {
             blurImage(context, image)
         }
     }
 
-    fun dimImageAsync(image: Bitmap, @FloatRange(from = 0.0, to = 1.0) percent: Float): Deferred<Bitmap> = async {
+    fun dimImageAsync(image: Bitmap, @FloatRange(from = 0.0, to = 1.0) percent: Float): Deferred<Bitmap> = GlobalScope.async {
         val paint = Paint().apply {
             colorFilter = LightingColorFilter(0xFF7F7F7F.toInt(), 0x00000000)
         }

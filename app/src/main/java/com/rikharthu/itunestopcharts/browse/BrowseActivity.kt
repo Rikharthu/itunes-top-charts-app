@@ -10,17 +10,19 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.rikharthu.itunestopcharts.App
+import com.rikharthu.itunestopcharts.core.executors.uiContext
 import com.rikharthu.itunestopcharts.event.TrackCountChangedEvent
 import com.rikharthu.itunestopcharts.util.dpToPx
 import kotlinx.android.synthetic.main.activity_top_charts.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import timber.log.Timber
-import kotlin.coroutines.experimental.Continuation
-import kotlin.coroutines.experimental.suspendCoroutine
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 
 class BrowseActivity : AppCompatActivity(), KodeinAware {
@@ -31,6 +33,7 @@ class BrowseActivity : AppCompatActivity(), KodeinAware {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_top_charts)
 
         kodein = App.get(this).kodein
@@ -39,7 +42,7 @@ class BrowseActivity : AppCompatActivity(), KodeinAware {
         setupBackground()
         setupNavigationDrawer()
         settingsBtn.setOnClickListener {
-            launch(UI) {
+            GlobalScope.launch(uiContext) {
                 changeTrackCount()
             }
         }
@@ -95,6 +98,10 @@ class BrowseActivity : AppCompatActivity(), KodeinAware {
                     scaleX = newScale
                     scaleY = newScale
                 }
+                contentCard.apply {
+                    // TODO extract to dp
+                    radius = slideOffset * 100
+                }
 
                 val menuSlideX = drawerContent.width - slideOffset * drawerContent.width
                 drawerContent.translationX = menuSlideX
@@ -123,7 +130,7 @@ class BrowseActivity : AppCompatActivity(), KodeinAware {
                 val fromY = drawerLayout.height - (settingsBtn.y - settingsBtn.translationY)
                 Timber.tag("XDEBUG").d("height=${drawerLayout.height}, btn.y=${settingsBtn.y - settingsBtn.translationY}")
                 settingsBtn.translationY = (1 - settingsBtnTranslationFactor) * fromY
-                settingsBtn.alpha=settingsBtnTranslationFactor
+                settingsBtn.alpha = settingsBtnTranslationFactor
             }
 
             override fun onDrawerOpened(drawerView: View) {

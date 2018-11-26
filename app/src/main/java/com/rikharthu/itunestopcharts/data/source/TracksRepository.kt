@@ -1,24 +1,22 @@
 package com.rikharthu.itunestopcharts.data.source
 
+import com.rikharthu.itunestopcharts.core.exception.Failure
+import com.rikharthu.itunestopcharts.core.functional.Either
 import com.rikharthu.itunestopcharts.data.Track
 
 interface TracksRepository {
 
-    suspend fun getHotTracks(count: Int): Resource<List<Track>>
+    fun hotTracks(count: Int): Either<Failure, List<Track>>
 
-    suspend fun getFavoriteTracks(): Resource<List<Track>>
+    fun favoriteTracks(): Either<Failure, List<Track>>
 
-    suspend fun getTrack(trackId: String): Resource<Track>
+    fun track(id: String): Either<Failure, Track>
 
-    suspend fun saveTrack(track: Track)
+    fun save(track: Track)
 
-    suspend fun favoriteTrack(trackId: String)
+    fun favorite(id:String)
 
-    suspend fun unFavoriteTrack(trackId: String)
+    fun unfavorite(id:String)
 
-    suspend fun deleteTrack(trackId: String)
-
-    suspend fun deleteAllTracks()
-
-    suspend fun refreshTracks()
+    fun refresh()
 }

@@ -1,7 +1,7 @@
 package com.rikharthu.itunestopcharts.data.source.remote.service
 
 import com.rikharthu.itunestopcharts.data.source.remote.model.FeedResponse
-import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

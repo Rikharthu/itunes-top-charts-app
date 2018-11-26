@@ -2,23 +2,22 @@ package com.rikharthu.itunestopcharts
 
 import android.app.Application
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
-import com.rikharthu.itunestopcharts.browse.HotChartsViewModel
 import com.rikharthu.itunestopcharts.data.source.TracksDataSource
-import com.rikharthu.itunestopcharts.data.source.TracksRepositoryImpl
 import com.rikharthu.itunestopcharts.data.source.local.TracksDatabase
 import com.rikharthu.itunestopcharts.data.source.local.TracksLocalDataSource
 import com.rikharthu.itunestopcharts.data.source.remote.TracksRemoteDataSource
 import com.rikharthu.itunestopcharts.data.source.remote.deserializer.FeedDeserializer
 import com.rikharthu.itunestopcharts.data.source.remote.model.FeedResponse
 import com.rikharthu.itunestopcharts.data.source.remote.service.TopTracksService
-import com.rikharthu.itunestopcharts.util.AppExecutors
 import org.kodein.di.Kodein
-import org.kodein.di.generic.*
+import org.kodein.di.generic.bind
+import org.kodein.di.generic.eagerSingleton
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.with
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
@@ -62,34 +61,34 @@ class App : Application() {
             }
         }
         val localModule = Kodein.Module("local_module") {
-            constant("database_name") with "tracks.db"
+            constant("database_name") with "hotTracks.db"
             bind<TracksDatabase>() with eagerSingleton {
                 Room.databaseBuilder(applicationContext,
                         TracksDatabase::class.java, instance("database_name"))
                         .build()
             }
             bind<TracksDataSource>(tag = "local") with eagerSingleton {
-                TracksLocalDataSource(instance<TracksDatabase>().tracksDao(), instance())
+                TracksLocalDataSource(instance<TracksDatabase>().tracksDao())
             }
         }
 
         val dataModule = Kodein.Module("data_module") {
             import(remoteModule)
             import(localModule)
-            bind<TracksRepositoryImpl>() with eagerSingleton {
-                TracksRepositoryImpl(instance(tag = "remote"), instance(tag = "local"))
-            }
+//            bind<TracksRepositoryImpl>() with eagerSingleton {
+//                TracksRepositoryImpl(instance(tag = "remote"), instance(tag = "local"))
+//            }
         }
 
-        val presentationModule=Kodein.Module("presentation_module"){
-//            bind<HotChartsViewModel>() with factory {
+        val presentationModule = Kodein.Module("presentation_module") {
+            //            bind<HotChartsViewModel>() with factory {
 //                ViewModelProviderr
 //            }
         }
 
         kodein = Kodein {
             import(dataModule)
-            bind<AppExecutors>() with singleton { AppExecutors() }
+//            bind<AppExecutors>() with singleton { AppExecutors() }
         }
     }
 }

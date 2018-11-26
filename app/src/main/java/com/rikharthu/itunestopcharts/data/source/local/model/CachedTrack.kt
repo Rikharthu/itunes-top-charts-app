@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "tracks")
-data class TrackEntity(
+@Entity(tableName = "hotTracks")
+data class CachedTrack(
         @PrimaryKey
         val id: String,
         val name: String,
