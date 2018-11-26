@@ -107,7 +107,7 @@ class TracksRepositoryTest : UnitTest() {
             verify(local).saveTracks(capture())
             val data = this.allValues
             assertEquals(remoteTrackEntities, data)
-            given { local.getHotTracks(remoteTrackCount) }.willReturn(Either.Right(data))
+//            given { local.getHotTracks(remoteTrackCount) }.willReturn(Either.Right(data))
         }
         // New local data has been returned
         verify(local, times(2)).getHotTracks(remoteTrackCount)
